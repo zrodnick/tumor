@@ -22,3 +22,15 @@ healthyClusters <- KMC$cluster
 dim(healthyClusters) <- c(nrow(healthyMatrix), ncol(healthyMatrix))
 
 image(healthyClusters, axes=FALSE, col=rainbow(k))
+
+tumor <- read.csv("tumor.csv", header=FALSE)
+tumorMatrix <- as.matrix(tumor)
+tumorVector <- as.vector(tumorMatrix)
+
+install.packages("flexclust")
+library(flexclust)
+
+KMC.kcca = as.kcca(KMC, healthyVector)
+tumorClusters <- predict(KMC.kcca, newdata=tumorVector)
+dim(tumorClusters) = c(nrow(tumorMatrix), ncol(tumorMatrix))
+image(tumorClusters, axes=FALSE, col=rainbow(k))
